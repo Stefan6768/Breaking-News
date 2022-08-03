@@ -5,9 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.breakingnews.R
 import com.example.breakingnews.data.data.model.NewsArticle
+import com.example.breakingnews.ui.HomefragmentDirections
 
 class NewsAdapter(
   private val dataset: List<NewsArticle>
@@ -18,6 +21,7 @@ class NewsAdapter(
     val location: TextView = view.findViewById(R.id.news_location_text)
     val date: TextView = view.findViewById(R.id.news_date_text)
     val image: ImageView = view.findViewById(R.id.news_image)
+    val card: CardView = view.findViewById(R.id.news_card)
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -34,6 +38,11 @@ class NewsAdapter(
     holder.location.text = item.location
     holder.date.text = item.date
     holder.image.setImageResource(item.imageResourceId)
+
+    holder.card.setOnClickListener {
+      holder.itemView.findNavController()
+        .navigate(HomefragmentDirections.actionHomefragmentToDetailFragment(item.id))
+    }
   }
 
   override fun getItemCount(): Int {
